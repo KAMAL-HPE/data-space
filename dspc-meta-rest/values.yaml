@@ -1,0 +1,31 @@
+# Default values for dspc-inspect-rest.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: dspc-meta-rest-service
+replicaCount: 1
+
+image:
+  repository: bowdengl/dspc-meta-rest-service
+  pullPolicy: IfNotPresent
+  tag: "v0.1"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+service:
+  type: NodePort
+  port: 8180
+  nodePort: "30165"
+
+volumeMount:
+  name: dspc-meta-data
+  mountPath: /app/plugins
+  claimName: dspc-meta-pvc-claim
+
+pvc:
+  name: dspc-meta-pvc-claim
+  storage: 1Gi
+  storageClassName: managed-nfs-storage

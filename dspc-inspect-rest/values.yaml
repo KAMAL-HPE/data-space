@@ -1,0 +1,31 @@
+# Default values for dspc-inspect-rest.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: dspc-inspect-deployment
+replicaCount: 1
+
+image:
+  repository: bowdengl/dspc-inspect-rest-service
+  pullPolicy: IfNotPresent
+  tag: "v0.1"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+service:
+  type: NodePort
+  port: 8190
+  nodePort: "30164"
+
+volumeMount:
+  name: pv-data
+  mountPath: /app/plugins
+  claimName: dspc-inspect-pvc-claim
+
+pvc:
+  name: dspc-inspect-pvc-claim
+  storage: 1Gi
+  storageClassName: managed-nfs-storage
